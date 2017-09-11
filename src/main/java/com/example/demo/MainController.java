@@ -106,7 +106,18 @@ public class MainController {
 
 
 
+    @RequestMapping("/formemail")
+    public String formEmail(Model model) {
 
+        String recipient = "joorge.jetson@gmail.com";
+
+        sendEmailWithTemplating(recipient);
+
+//        model.addAttribute("recipient", recipient);
+
+        return "redirect:/";
+//        return "emailtemplate";
+    }
 
 
 
