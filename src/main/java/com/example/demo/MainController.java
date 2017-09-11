@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import it.ozimov.springboot.mail.model.Email;
 import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
 import it.ozimov.springboot.mail.service.EmailService;
+import it.ozimov.springboot.mail.service.exception.CannotSendEmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.mail.internet.InternetAddress;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -57,7 +59,43 @@ public class MainController {
     }
 
 
+    public void sendEmailWithTemplating(String recipient) {
 
+        // declare as final, because Email here is a third party deal, and we really should never be messing with it
+        final Email email;
+        try {
+            email = DefaultEmail.builder()
+                    // DOES NOT MATTER what you put in .from address.. it ignores it and uses what is in properties file
+                    // this may work depending on the email server config that is being used
+                    // the from NAME does get used though
+                    .from(new InternetAddress("anyone@anywhere.net", "NateBotFiveThousand"))
+                    .to(Lists.newArrayList(
+                            new InternetAddress("joorge.jetson@gmail.com", "Joorgey Boy")
+//                            new InternetAddress("stlewand@yahoo.com", "Big Loo")
+                            ))
+                    .subject("Testing email with templating")
+                    .body("Test email with templating body")
+                    .encoding("UTF-8").build();
+
+            final Map<String, Object> modelObject = new HashMap<>();
+
+            modelObject.put("recipient", recipient);
+
+            // conveniently, .send will put a nice INFO message in the console output when it sends
+            try {
+                // might be able to attach pictures with .send?
+                emailService.send(email, "emailtemplate", modelObject);
+            } catch (CannotSendEmailException e) {
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!! caught a cannot send email exception");
+                e.printStackTrace();
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!! caught an unsupported encoding exception");
+            e.printStackTrace();
+        }
+
+    }
 
 
 
