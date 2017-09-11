@@ -68,6 +68,13 @@
 			<artifactId>nekohtml</artifactId>
 		</dependency>
 
+		<!-- spring email tools DON'T FORGET TO ANNOTATE THE MAIN APP -->
+		<dependency>
+			<groupId>it.ozimov</groupId>
+			<artifactId>spring-boot-email-core</artifactId>
+			<version>0.6.2</version>
+		</dependency>
+
 
 
 	</dependencies>

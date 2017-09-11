@@ -15,6 +15,9 @@
     <form method="post" action="/add" th:object="${actor}" enctype="multipart/form-data">
         Name: <input type="text" th:field="*{name}"/>
         Real Name: <input type="text" th:field="*{realname}"/>
+        <br/>
+        <br/>
+
         <input type="file" name="file"/>
         <br/>
         <br/>
