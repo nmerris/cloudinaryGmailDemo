@@ -28,113 +28,25 @@ public class MainController {
     CloudinaryConfig cloudinaryConfig;
 
     @Autowired
-    public EmailService emailService;
-
-
-
-    public void sendEmailWithoutTemplate() {
-
-        final Email email;
-        try {
-            email = DefaultEmail.builder()
-                    // DOES NOT MATTER what you put in .from address.. it ignores it and uses what is in properties file
-                    // this may work depending on the email server config that is being used
-                    // the from NAME does get used though
-                    .from(new InternetAddress("anyone@anywhere.net", "NateBotFiveThousand"))
-                    .to(Lists.newArrayList(
-                            new InternetAddress("joorge.jetson@gmail.com", "Joorgey Boy"),
-                            new InternetAddress("stlewand@yahoo.com", "Big Loo")))
-                    .subject("What up scott, this is nate, I sent this from inside my Java web app!  To prove it's me: Mr. Mills is a great fool.")
-                    .body("I am testing out Spring's Java email service, and it is working!  How is it going my friend?  Cheers, Nate")
-                    .encoding("UTF-8").build();
-
-            // conveniently, .send will put a nice INFO message in the console output when it sends
-            emailService.send(email);
-
-        } catch (UnsupportedEncodingException e) {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!! caught an unsupported encoding exception");
-            e.printStackTrace();
-        }
-
-    }
-
-
-    public void sendEmailWithTemplating(String recipient) {
-
-        // declare as final, because Email here is a third party deal, and we really should never be messing with it
-        final Email email;
-        try {
-            email = DefaultEmail.builder()
-                    // DOES NOT MATTER what you put in .from address.. it ignores it and uses what is in properties file
-                    // this may work depending on the email server config that is being used
-                    // the from NAME does get used though
-                    .from(new InternetAddress("anyone@anywhere.net", "NateBotFiveThousand"))
-                    .to(Lists.newArrayList(
-                            new InternetAddress("joorge.jetson@gmail.com", "Joorgey Boy")
-//                            new InternetAddress("stlewand@yahoo.com", "Big Loo")
-                            ))
-                    .subject("Testing email with templating")
-                    .body("Test email with templating body")
-                    .encoding("UTF-8").build();
-
-            final Map<String, Object> modelObject = new HashMap<>();
-
-            modelObject.put("recipient", recipient);
-
-            // conveniently, .send will put a nice INFO message in the console output when it sends
-            try {
-                // might be able to attach pictures with .send?
-                emailService.send(email, "emailtemplate", modelObject);
-            } catch (CannotSendEmailException e) {
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!! caught a cannot send email exception");
-                e.printStackTrace();
-            }
-
-        } catch (UnsupportedEncodingException e) {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!! caught an unsupported encoding exception");
-            e.printStackTrace();
-        }
-
-    }
+    MemeRepo memeRepo;
 
 
 
 
-
-
-
-
-
-
-    @RequestMapping("/formemail")
-    public String formEmail(Model model) {
-
-        String recipient = "joorge.jetson@gmail.com";
-
-        sendEmailWithTemplating(recipient);
-
-//        model.addAttribute("recipient", recipient);
-
-        return "redirect:/";
-//        return "emailtemplate";
-    }
-
-
-
-
-
-    @RequestMapping("/")
+    @GetMapping("/")
     public String listActors(Model model) {
-        model.addAttribute("actors", actorRepo.findAll());
-        return "list";
+
+        model.addAttribute("meme", new Meme());
+        return "memeform";
     }
 
-    @RequestMapping("/sendemail")
-    public String sendEmail() {
 
-        sendEmailWithoutTemplate();
+    @PostMapping("/")
+    public String processMeme(@ModelAttribute Meme meme) {
 
-        return "redirect:/";
+
+
+        return "showimage";
     }
 
 

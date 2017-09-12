@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+
+<body>
+    <form action="#" th:action="@{/}" th:object="${meme}" method="post">
+        <!-- need this or id is zero every time and keep getting additional records when updating -->
+        <input type="hidden" th:field="*{id}" />
+
+
+        <div class="form-group">
+            <label class="section-heading" for="title">Image URL</label>
+            <input id="title" class="form-control" type="text" th:field="*{imageUrl}" autofocus/>
+        </div>
+
+        <div class="form-group">
+            <label class="section-heading" for="width">Width</label>
+            <input id="width" class="form-control" type="text" th:field="*{width}" autofocus/>
+        </div>
+
+        <div class="form-group">
+            <label class="section-heading" for="height">Height</label>
+            <input id="height" class="form-control" type="text" th:field="*{height}" autofocus/>
+        </div>
+
+        <div class="form-group">
+            <label class="section-heading" for="border">Choose a border</label>
+            <select id="border" class="form-control" name="selectedBorder" th:object="*{borderType}">
+                <option th:value="4px_solid_black" text="4px_solid_black"></option>
+                <option th:value="6px_solid_rgb:00390b60" text="semi transparent gray"></option>
+                <option th:value="2px_solid_green" text="2px_solid_green"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="section-heading" for="skill">Choose an artistic filter</label>
+            <select id="skill" class="form-control" name="selectedFilter" th:object="*{artisticFilter}">
+                <option value="incognito" text="incognito"></option>
+                <option value="red_rock" text="red_rock"></option>
+                <option value="zorro" text="zorro"></option>
+                <option value="eucalyptus" text="eucalyptus"></option>
+            </select>
+        </div>
+
+        <input class="btn btn-primary bold-input" type="submit" value="Submit"/>
+
+
+    </form>
+</body>
+</html>
