@@ -42,10 +42,23 @@ public class MainController {
 
 
     @PostMapping("/")
-    public String processMeme(@ModelAttribute Meme meme) {
+    public String processMeme(@RequestParam("selectedFilter") String filter,
+                              @RequestParam("selectedBorder") String border,
+                              @ModelAttribute Meme meme, Model model) {
+
+        meme.setArtisticFilter(filter);
+        meme.setBorderType(border);
+//        System.out.println("meme data... url: " + meme.getImageUrl() + ", border: " + meme.getBorderType() + ", filter: " + meme.getArtisticFilter());
 
 
+        Map uploadResult = cloudinaryConfig.upload(meme.getImageUrl(),
+                    ObjectUtils.asMap("resourcetype", "auto"));
 
+        System.out.println(uploadResult);
+
+//        System.out.println("uploadResult.get (secure_url): " + uploadResult.get("secure_url"));
+        model.addAttribute("cloudinaryUrl", uploadResult.get("secure_url"));
+        model.addAttribute("originalUrl", meme.getImageUrl());
         return "showimage";
     }
 

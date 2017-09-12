@@ -28,20 +28,20 @@
 
         <div class="form-group">
             <label class="section-heading" for="border">Choose a border</label>
-            <select id="border" class="form-control" name="selectedBorder" th:object="*{borderType}">
-                <option th:value="4px_solid_black" text="4px_solid_black"></option>
-                <option th:value="6px_solid_rgb:00390b60" text="semi transparent gray"></option>
-                <option th:value="2px_solid_green" text="2px_solid_green"></option>
+            <select id="border" class="form-control" name="selectedBorder">
+                <option value="4px_solid_black">4px_solid_black</option>
+                <option value="6px_solid_rgb:00390b60">semi transparent gray</option>
+                <option value="2px_solid_green">2px_solid_green</option>
             </select>
         </div>
 
         <div class="form-group">
             <label class="section-heading" for="skill">Choose an artistic filter</label>
-            <select id="skill" class="form-control" name="selectedFilter" th:object="*{artisticFilter}">
-                <option value="incognito" text="incognito"></option>
-                <option value="red_rock" text="red_rock"></option>
-                <option value="zorro" text="zorro"></option>
-                <option value="eucalyptus" text="eucalyptus"></option>
+            <select id="skill" class="form-control" name="selectedFilter">
+                <option th:value="'incognito'" th:text="'incognito'"></option>
+                <option th:value="'red_rock'" th:text="'red_rock'"></option>
+                <option th:value="'zorro'" th:text="'zorro'"></option>
+                <option th:value="'eucalyptus'" th:text="'eucalyptus'"></option>
             </select>
         </div>
 
