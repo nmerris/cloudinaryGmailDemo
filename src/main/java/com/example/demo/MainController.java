@@ -50,15 +50,30 @@ public class MainController {
         meme.setBorderType(border);
 //        System.out.println("meme data... url: " + meme.getImageUrl() + ", border: " + meme.getBorderType() + ", filter: " + meme.getArtisticFilter());
 
-
         Map uploadResult = cloudinaryConfig.upload(meme.getImageUrl(),
                     ObjectUtils.asMap("resourcetype", "auto"));
 
         System.out.println(uploadResult);
 
+
+        // returns as a full <image> tag
+        String modifiedUrl = cloudinaryConfig.createUrl(uploadResult.get("public_id").toString(), 200, 200, "fit");
+
+
+
+
+
+
+        System.out.println(modifiedUrl);
+
+        String[] parts = modifiedUrl.split("<img src='");
+        String[] parts2 = parts[1].split("'/>");
+        System.out.println("!!!!!!!!!!!! parts2[0]: " + parts2[0]);
+
 //        System.out.println("uploadResult.get (secure_url): " + uploadResult.get("secure_url"));
         model.addAttribute("cloudinaryUrl", uploadResult.get("secure_url"));
         model.addAttribute("originalUrl", meme.getImageUrl());
+        model.addAttribute("modifiedUrl", parts2[0]);
         return "showimage";
     }
 

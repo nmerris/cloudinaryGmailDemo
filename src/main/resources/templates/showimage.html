@@ -7,8 +7,12 @@
 <body>
 
     <h3 th:text="'just uploaded this image to cloudinary: ' + ${originalUrl}"></h3>
-    <h3 th:text="'this is the new cloudinary url: ' + ${cloudinaryUrl}"></h3>
+    <h3 th:text="'this is the new cloudinary url with no modifcations: ' + ${cloudinaryUrl}"></h3>
     <img th:src="${cloudinaryUrl}">
+    <h3 th:text="'this is the cloudinary url with MODIFICATIONS: ' + ${modifiedUrl}"></h3>
+    <img th:src="${modifiedUrl}">
+
+    <!--<div th:text="${modifiedUrl}"></div>-->
 
 </body>
 </html>

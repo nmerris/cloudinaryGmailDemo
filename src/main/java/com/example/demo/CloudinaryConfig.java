@@ -36,6 +36,12 @@ public class CloudinaryConfig {
         }
     }
 
+//    public String createAnotherUrl() {
+//        return cloudinary.url().transformation(new Transformation()
+//                .width(400).height(400).gravity("face").radius("max").crop("crop").chain()
+//                .width(200).crop("scale")).imageTag("lady.jpg")
+//    }
+
 
     public String createUrl(String name, int width, int height, String action) {
         return cloudinary.url()
